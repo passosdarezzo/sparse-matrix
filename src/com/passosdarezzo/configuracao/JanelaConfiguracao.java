@@ -7,12 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 /**
@@ -37,7 +32,7 @@ public class JanelaConfiguracao extends JFrame implements ActionListener{
     private Color no;
     private Color info;
     private Border bordaCores = BorderFactory.createTitledBorder(
-            BorderFactory.createLoweredBevelBorder(), "Cores Utilizadas no Programa");
+            BorderFactory.createLoweredBevelBorder(), java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("brd_colors"));
 
 
     /**
@@ -45,9 +40,13 @@ public class JanelaConfiguracao extends JFrame implements ActionListener{
      * @param param
      */
     public JanelaConfiguracao(Parametros param, JPanel ref){
-        super("Configurações");
+        super(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("wnd_preferences"));
         tela = getContentPane();
         tela.setLayout(new BorderLayout());
+        
+        //Icone que aparece na barra de titulo
+        ImageIcon icone = new ImageIcon("imagens/logo.png");
+        setIconImage(icone.getImage());
 
         this.param = param;
         this.ref = ref;
@@ -68,46 +67,45 @@ public class JanelaConfiguracao extends JFrame implements ActionListener{
      */
     public void initComponents(){
         //Objeto Cores
-        lRegua = new JButton("Régua");
+        lRegua = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_rule"));
         lRegua.setBackground(param.getCorRegua());
         lRegua.setForeground(Color.WHITE);
         lRegua.addActionListener(this);
 
-        lLinhaH = new JButton("Linha Horizontal");
+        lLinhaH = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_horizontal_line"));
         lLinhaH.setBackground(param.getCorlinhaHorizontal());
         lLinhaH.setForeground(Color.WHITE);
         lLinhaH.addActionListener(this);
 
-        lLinhaV = new JButton("Linha Vertical");
+        lLinhaV = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_vertical_line"));
         lLinhaV.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         lLinhaV.setForeground(Color.WHITE);
         lLinhaV.setBackground(param.getCorlinhaVertical());
         lLinhaV.addActionListener(this);
 
-        lNo = new JButton("Nó");
+        lNo = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_node"));
         lNo.setForeground(Color.WHITE);
         lNo.setBackground(param.getCorNo());
         lNo.addActionListener(this);
 
-        lInfo = new JButton("Informação");
+        lInfo = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_number"));
         lInfo.setBackground(param.getCorInfo());
         lInfo.setForeground(Color.WHITE);
         lInfo.addActionListener(this);
 
-        pontilhado = new JCheckBox("Utiliza linhas Pontilhadas", param.isBooPontilhado());
+        pontilhado = new JCheckBox(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("chkbox_dotted_line"), param.isBooPontilhado());
 
         //Botões
-        bOk = new JButton("Ok");
+        bOk = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_ok"));
         bOk.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, JanelaConfiguracao.this, "efetiva"));
-        bCancel = new JButton("Cancelar");
+        bCancel = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_cancel"));
         bCancel.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, JanelaConfiguracao.this, "sair"));
 
         JPanel painelCentral = new JPanel();
         painelCentral.setBorder(bordaCores);
         painelCentral.setLayout(new GridLayout(6, 1, 0, 8));
-        //painelCentral.setLayout(new BoxLayout(painelCentral, BoxLayout.Y_AXIS));
         painelCentral.add(lRegua);
         painelCentral.add(lLinhaH);
         painelCentral.add(lLinhaV);
@@ -148,7 +146,7 @@ public class JanelaConfiguracao extends JFrame implements ActionListener{
      */
     @Override
     public void actionPerformed(ActionEvent e){
-        Color temp = JColorChooser.showDialog(this, "Seletor de Cores", param.getCorRegua());
+        Color temp = JColorChooser.showDialog(this, java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("wnd_color_chooser"), param.getCorRegua());
         if(temp != null){
             if(e.getSource() == lRegua){
                 regua = temp;
@@ -172,11 +170,4 @@ public class JanelaConfiguracao extends JFrame implements ActionListener{
             }
         }
     }
-
-    /**
-    public static void main(String [] args){
-        JanelaConfiguracao app = new JanelaConfiguracao(new Parametros(), new JPanel());
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-    */
 }

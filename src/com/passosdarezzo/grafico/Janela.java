@@ -1,29 +1,13 @@
 package com.passosdarezzo.grafico;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.event.ActionListener;
-import java.beans.EventHandler;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import com.passosdarezzo.configuracao.Parametros;
 import com.passosdarezzo.configuracao.JanelaConfiguracao;
+import com.passosdarezzo.configuracao.Parametros;
 import com.passosdarezzo.matrizEsparsa.MatrizEsparsa;
 import com.passosdarezzo.matrizEsparsa.No;
 import com.passosdarezzo.validacao.NumberOnlyFilter;
-import java.awt.Container;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 import javax.swing.*;
 import javax.swing.text.AbstractDocument;
 
@@ -47,8 +31,7 @@ public class Janela extends JFrame{
      * Construtor da classe
      */
     public Janela() {
-        super("Matriz Esparsa");
-        Container tela = getContentPane();
+        super(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("wnd_app_title"));
 
         //Icone que aparece na barra de titulo
         ImageIcon icone = new ImageIcon("imagens/logo.png");
@@ -59,37 +42,37 @@ public class Janela extends JFrame{
         conf = new Parametros();
 
         //Campos e Labels para entrada da matriz
-        lColuna = new JLabel("Coluna");
-        lLinha = new JLabel("Linha");
-        lInfo = new JLabel("Numero");
+        lColuna = new JLabel(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("in_column"));
+        lLinha = new JLabel(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("in_row"));
+        lInfo = new JLabel(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("in_value"));
         
         fieldInfo = new JTextField(8);
         ((AbstractDocument)fieldInfo.getDocument()).setDocumentFilter(new NumberOnlyFilter());
-        fieldInfo.setToolTipText("Informe o número que será armazenado");
+        fieldInfo.setToolTipText(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("tip_value"));
         fieldInfo.setFocusable(true);
         
         fieldColuna = new JTextField(8);
-        fieldColuna.setToolTipText("Informe a coluna do nó");
+        fieldColuna.setToolTipText(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("tip_column"));
         ((AbstractDocument)fieldColuna.getDocument()).setDocumentFilter(new NumberOnlyFilter());
         
         fieldLinha = new JTextField(8);
-        fieldLinha.setToolTipText("Informe a linha do nó");
+        fieldLinha.setToolTipText(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("tip_row"));
         ((AbstractDocument)fieldLinha.getDocument()).setDocumentFilter(new NumberOnlyFilter());
         
         //Botões
-        bInserir = new JButton("Inserir");
+        bInserir = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_insert"));
         bInserir.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, Janela.this, "inserirNo"));
 
-        bRemover = new JButton("Remover");
+        bRemover = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_remove"));
         bRemover.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, Janela.this, "removerNo"));
 
-        bLimpar = new JButton("Limpar");
+        bLimpar = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_clear"));
         bLimpar.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, Janela.this, "limparMatriz"));
 
-        bConf = new JButton("Configurações");
+        bConf = new JButton(java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("btn_preferences"));
         bConf.addActionListener((ActionListener)
                 EventHandler.create(ActionListener.class, Janela.this, "abrirConf"));
 
@@ -120,10 +103,8 @@ public class Janela extends JFrame{
         add(scroller, BorderLayout.CENTER);
 
         //Display the window.
-        //frame.pack();
         setSize(800, 500);
         setLocationRelativeTo(null);
-        //setVisible(true);
     }
 
     /**
@@ -133,8 +114,10 @@ public class Janela extends JFrame{
         //Resultado resultado = validaEntradas();
         //Verifica se todas as informações foram preenchidas
         if(!validaEntrada()){
-            JOptionPane.showMessageDialog(this, "Informe o conteúdo, a linha e a "
-                    + "coluna do Nó", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                                          java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("msg_wrn_insert"), 
+                                          java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("wnd_msg_wrn"), 
+                                          JOptionPane.INFORMATION_MESSAGE);
         }else{
             int coluna = Integer.parseInt(fieldColuna.getText().trim());
             int linha = Integer.parseInt(fieldLinha.getText().trim());
@@ -155,8 +138,9 @@ public class Janela extends JFrame{
      */
     public void removerNo(){
         if(!validaRemocao()){
-            JOptionPane.showMessageDialog(this, "Informe a linha e a "
-                    + "coluna do Nó", "Alerta", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                                          java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("msg_wrn_remove"), 
+                                          java.util.ResourceBundle.getBundle("com/passosdarezzo/Bundle").getString("wnd_msg_wrn"), JOptionPane.INFORMATION_MESSAGE);
         }else{
             int coluna = Integer.parseInt(fieldColuna.getText());
             int linha = Integer.parseInt(fieldLinha.getText());
